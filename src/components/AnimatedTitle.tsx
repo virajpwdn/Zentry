@@ -23,6 +23,7 @@ const AnimatedTitle = ({ title, containerClass }: ButtonProps) => {
 
       titleAnimation.to(".animated-word", {
         opacity: 1,
+        delay: 0.5,
         transform: "translate3d(0,0,0) rotateY(0deg) rotateX(0deg)",
         ease: "power2.inOut",
         stagger: 0.08,
