@@ -2,7 +2,7 @@ interface ButtonProps {
   id: string;
   title: string;
   containerClass: string;
-  leftIcon: React.ReactNode;
+  leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
 }
 const Button = ({
