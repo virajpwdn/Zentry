@@ -5,10 +5,10 @@ import { useWindowScroll } from "react-use";
 import gsap from "gsap";
 
 const Navbar = () => {
-  const navContainerRef = useRef(null);
-  const audioElementRef = useRef(null);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [isNavVisible, setIsNavVisible] = useState(false);
+  const navContainerRef = useRef<HTMLDivElement | null>(null);
+  const audioElementRef = useRef<HTMLAudioElement | null>(null);
+  const lastScrollYRef = useRef(0);
+  // const [isNavVisible, setIsNavVisible] = useState(false);
 
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [isIndicatorActive, setIsIndicatorActive] = useState(false);
@@ -23,27 +23,32 @@ const Navbar = () => {
   const { y: currentScrollY } = useWindowScroll();
 
   useEffect(() => {
+    const isVisible = currentScrollY === 0 || currentScrollY < lastScrollYRef.current;
+
     if (currentScrollY === 0) {
-      setIsNavVisible(true);
       navContainerRef.current?.classList.remove("floating-nav");
-    } else if (currentScrollY < lastScrollY) {
-      setIsNavVisible(true);
+    } else if (currentScrollY < lastScrollYRef.current) {
       navContainerRef.current?.classList.add("floating-nav");
     } else {
-      setIsNavVisible(false);
       navContainerRef.current?.classList.add("floating-nav");
     }
 
-    setLastScrollY(currentScrollY);
-  }, [currentScrollY]);
-
-  useEffect(() => {
     gsap.to(navContainerRef.current, {
-      y: isNavVisible ? 0 : "-100",
-      opacity: isNavVisible ? 1 : "0",
+      y: isVisible ? 0 : "-100",
+      opacity: isVisible ? 1 : "0",
       duration: 0.2,
     });
-  }, [isNavVisible]);
+
+    lastScrollYRef.current = currentScrollY
+  }, [currentScrollY]);
+
+  // useEffect(() => {
+  //   gsap.to(navContainerRef.current, {
+  //     y: isNavVisible ? 0 : "-100",
+  //     opacity: isNavVisible ? 1 : "0",
+  //     duration: 0.2,
+  //   });
+  // }, [isNavVisible]);
 
   useEffect(() => {
     if (isAudioPlaying) {

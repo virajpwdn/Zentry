@@ -5,7 +5,7 @@ import RoundedCorners from "./RoundedCorner";
 import Button from "./Button";
 
 const Story = () => {
-  const frameRef = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<HTMLImageElement | null>(null);
 
   const handleMouseLeave = () => {
     const element = frameRef.current;
@@ -19,7 +19,7 @@ const Story = () => {
     });
   };
 
-  const handleMouseMove = (e: any) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLImageElement>) => {
     const { clientX, clientY } = e;
     const element = frameRef.current;
 
